@@ -1,0 +1,16 @@
+{
+  "name": "database-table",
+  "version": "0.1.0",
+  "description": "Database tables for FigJam",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "PillFall",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@figma/plugin-typings": "*",
+    "@figma/widget-typings": "*",
+    "typescript": "*"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Database Table",
+  "id": "1102833776087940938",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": [
+    "figjam"
+  ],
+  "containsWidget": true,
+  "widgetApi": "1.0.0",
+  "ui": "ui.html"
+}

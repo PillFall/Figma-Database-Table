@@ -1,0 +1,85 @@
+<style>
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+  }
+
+  div {
+    display: flex;
+  }
+
+  table {
+    width: 100vw;
+  }
+</style>
+<script src="https://unpkg.com/vue@3"></script>
+<article>
+  <div>
+    <button type="button" @click="newColumn">New Column</button>
+    <button type="submit" @click.prevent="save">Save</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Index</th>
+        <th>Nullable</th>
+      </tr>
+    </thead>
+    <tbody ref="tbody">
+      <tr v-for="column in columns">
+        <td>
+          <input v-model="column.name" type="text" />
+        </td>
+        <td>
+          <select v-model="column.type">
+            <option value="integer">Integer</option>
+            <option value="varchar">Var Char</option>
+          </select>
+        </td>
+        <td>
+          <select v-model="column.keyType">
+            <option value="primary">Primary</option>
+            <option value="unique">Unique</option>
+            <option value="index">Simple</option>
+            <option value="normal">None</option>
+          </select>
+        </td>
+        <td>
+          <input v-model="column.nullable" type="checkbox" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        columns: [],
+      }
+    },
+    mounted() {
+      addEventListener("message", (event) => {
+        this.columns = event.data.pluginMessage
+      })
+    },
+    methods: {
+      newColumn() {
+        this.columns.push({
+          name: null,
+          type: "integer",
+          keyType: "normal",
+          nullable: false,
+        })
+      },
+      save() {
+        parent.postMessage({
+          pluginMessage: JSON.stringify(this.columns),
+        }, "*")
+      },
+    },
+  }).mount("article")
+</script>

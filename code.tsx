@@ -58,9 +58,16 @@ function getKeyDecorator(column: Column): KeyDecorator {
 }
 
 function DatabaseTableWidget() {
-  const [theme, setTheme] = useSyncedState("theme", "#0d99ff")
+  const [theme, setTheme] = useSyncedState("theme", "#000c86")
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
+
+  useEffect(() => {
+    figma.ui.onmessage = (newColumns) => {
+      setColumns(JSON.parse(newColumns))
+      figma.closePlugin()
+    }
+  })
 
   usePropertyMenu(
     [
@@ -80,11 +87,27 @@ function DatabaseTableWidget() {
           }
         ],
       },
+      {
+        itemType: "action",
+        tooltip: "Edit table",
+        propertyName: "edit",
+      },
     ],
     ({ propertyName, propertyValue }) => {
-      if (propertyName === "colors") {
-        setTheme(propertyValue)
-      }
+      switch (propertyName) {
+        case "colors":
+          return setTheme(propertyValue)
+        
+        case "edit":
+          return new Promise(() => {
+            figma.showUI(__html__, {
+              width: 700,
+              height: 500,
+              title: "Edit table",
+            })
+            figma.ui.postMessage(columns)
+          })
+      } 
     }
   )
 

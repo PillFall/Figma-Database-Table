@@ -2,14 +2,15 @@ const { widget } = figma
 const {
   // Components
   AutoLayout,
-  Input,
   Frame,
-  Text,
+  Input,
   Rectangle,
+  Text,
 
   // Hooks
-  useSyncedState,
   useEffect,
+  usePropertyMenu,
+  useSyncedState,
 
   // Funtions
   register,
@@ -56,9 +57,36 @@ function getKeyDecorator(column: Column): KeyDecorator {
   }[column.keyType]
 }
 
-function Widget() {
+function DatabaseTableWidget() {
+  const [theme, setTheme] = useSyncedState("theme", "#0d99ff")
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
+
+  usePropertyMenu(
+    [
+      {
+        itemType: "color-selector",
+        propertyName: "colors",
+        tooltip: "Color selector",
+        selectedOption: theme,
+        options: [
+          {
+            option: "#000c86",
+            tooltip: "Blue",
+          },
+          {
+            option: "#000000",
+            tooltip: "Black",
+          }
+        ],
+      },
+    ],
+    ({ propertyName, propertyValue }) => {
+      if (propertyName === "colors") {
+        setTheme(propertyValue)
+      }
+    }
+  )
 
   return (
     <AutoLayout
@@ -73,7 +101,7 @@ function Widget() {
           height={48}
           x={0}
           y={0}
-          fill="#000c86"
+          fill={theme}
           cornerRadius={{
             topLeft: 16,
             topRight: 16,
@@ -152,4 +180,4 @@ function Widget() {
   )
 }
 
-register(Widget)
+register(DatabaseTableWidget)

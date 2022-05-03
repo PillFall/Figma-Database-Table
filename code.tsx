@@ -97,7 +97,7 @@ function DatabaseTableWidget() {
       switch (propertyName) {
         case "colors":
           return setTheme(propertyValue)
-        
+
         case "edit":
           return new Promise(() => {
             figma.showUI(__html__, {
@@ -107,7 +107,7 @@ function DatabaseTableWidget() {
             })
             figma.ui.postMessage(columns)
           })
-      } 
+      }
     }
   )
 
@@ -199,7 +199,7 @@ function DatabaseTableWidget() {
           </Frame>
         )
       })}
-    </AutoLayout >
+    </AutoLayout>
   )
 }
 

@@ -26,10 +26,11 @@
         <th>Type</th>
         <th>Index</th>
         <th>Nullable</th>
+        <th></th>
       </tr>
     </thead>
-    <tbody ref="tbody">
-      <tr v-for="column in columns">
+    <tbody>
+      <tr v-for="(column, index) in columns">
         <td>
           <input v-model="column.name" type="text" />
         </td>
@@ -49,6 +50,9 @@
         </td>
         <td>
           <input v-model="column.nullable" type="checkbox" />
+        </td>
+        <td>
+          <input type="button" @click="remove(index)" value="-" />
         </td>
       </tr>
     </tbody>
@@ -79,6 +83,9 @@
         parent.postMessage({
           pluginMessage: JSON.stringify(this.columns),
         }, "*")
+      },
+      remove(index) {
+        this.columns.splice(index, 1)
       },
     },
   }).mount("article")

@@ -4,7 +4,8 @@
   "description": "Database tables for FigJam",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
   },
   "author": "PillFall",
   "license": "GPL-3.0-or-later",

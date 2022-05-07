@@ -49,8 +49,48 @@
         </td>
         <td>
           <select v-model="column.type">
-            <option value="integer">Integer</option>
+            <!-- Integer Values -->
+            <option value="bigint">Big Integer</option>
+            <option value="mediumint">Medium Integer</option>
+            <option value="int">Integer</option>
+            <option value="smallint">Small Integer</option>
+            <option value="tinyint">Tiny Integer</option>
+
+            <!-- Text Values -->
+            <option value="char">Char</option>
             <option value="varchar">Var Char</option>
+            <option value="longtext">Long Text</option>
+            <option value="mediumtext">Medium Text</option>
+            <option value="text">Text</option>
+            <option value="tinytext">Tiny Text</option>
+            <option value="linestring">Line String</option>
+            <option value="multilinestring">Multiple Line String</option>
+
+            <!-- Decimal Values -->
+            <option value="decimal">Decimal</option>
+            <option value="float">Float</option>
+            <option value="double">Double</option>
+
+            <!-- Datetime Values -->
+            <option value="date">Date</option>
+            <option value="datetime">Datetime</option>
+            <option value="timestamp">Timestamp</option>
+            <option value="time">Time</option>
+            <option value="year">Year</option>
+
+            <!-- Special Values -->
+            <option value="binary">Binary</option>
+            <option value="blob">BLOB</option>
+            <option value="boolean">Boolean</option>
+            <option value="enum">Enum</option>
+            <option value="geometry">Geometry</option>
+            <option value="geometrycollection">Geometry Collection</option>
+            <option value="json">JSON</option>
+            <option value="point">point</option>
+            <option value="multipoint">Multiple Point</option>
+            <option value="polygon">Polygon</option>
+            <option value="multipolygon">Multiple Polygon</option>
+            <option value="uuid">UUID</option>
           </select>
         </td>
         <td>
@@ -87,7 +127,7 @@
       newColumn() {
         this.columns.push({
           name: null,
-          type: "integer",
+          type: "int",
           keyType: "normal",
           nullable: false,
         })

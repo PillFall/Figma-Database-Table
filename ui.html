@@ -1,17 +1,85 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  html,
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: Inter;
+    scroll-padding-top: 80px;
+  }
   body {
-    padding: 0;
     margin: 0;
   }
 
   div {
     display: flex;
     gap: 0.5rem;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background-color: #2C2C2C;
+    position: sticky;
+    top: 0px;
   }
 
   table {
-    width: 100vw;
+    margin-top: 8px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    position: sticky;
+    top: 40px;
+    height: 40px;
+    background-color: #FFFFFF;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  button {
+    height: 32px;
+    line-height: 30px;
+    max-width: 200px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: initial;
+    color: #ffffff;
+    font-family: Inter;
+    font-weight: 500;
+    padding: 0;
+  }
+
+
+  button[type=submit] {
+    padding: 0px 11px;
+    border: none;
+    background-color: #18A0FB;
+    color: #FFFFFF;
+  }
+
+  button[type=button] {
+    padding: 0px 11px;
+  }
+
+  button[type=reset] {
+    width: 32px;
+    line-height: 32px;
+    display: inline-grid;
+    place-items: center;
+    color: #333333;
+    fill: #333333;
+    border: none;
+    border-radius: 2px;
+  }
+
+  button[type=reset]:hover {
+    background-color: rgba(0, 0, 0, 0.06);
   }
 
   input,
@@ -19,11 +87,49 @@
     width: 100%;
   }
 
-  input[type=button] {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-grid;
-    place-items: center;
+  input[type=text] {
+    background-color: #FFFFFF;
+    color: rgba(0, 0, 0, 0.8);
+    font-family: Inter;
+    border: none;
+    padding: 7px;
+    border-radius: 2px;
+    border-color: rgba(0, 0, 0, 0.1);
+    border-style: solid;
+    border-width: 1px;
+  }
+
+  input[type=text]:focus,
+  input[type=text]:focus-visible {
+    border-color: #18A0FB;
+    outline-color: #18A0FB;
+    outline-width: 1px;
+  }
+
+  input[type=checkbox] {
+    width: auto;
+  }
+
+  select {
+    height: 32px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  select:active,
+  select:focus,
+  select:focus-visible {
+    border-color: #18A0FB;
+    outline-color: #18A0FB;
+    outline-width: 1px;
+  }
+
+  .drag-target-top {
+    border-top: 2px solid black;
+  }
+
+  .drag-target-bottom {
+    border-bottom: 2px solid black;
   }
 </style>
 <script src="https://unpkg.com/vue@3"></script>
@@ -43,7 +149,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ref="columns" v-for="(column, index) in columns" draggable="true" @dragend="dragEnd" @dragover="dragOver">
+      <tr ref="columns" v-for="(column, index) in columns" draggable="true" @dragstart="dragStart" @dragend="dragEnd"
+        @dragover="dragOver" @dragleave="dragLeave">
         <td>
           <input v-model="column.name" type="text" />
         </td>
@@ -105,7 +212,13 @@
           <input v-model="column.nullable" type="checkbox" />
         </td>
         <td>
-          <input type="button" @click="remove(index)" value="-" />
+          <button type="reset" @click="remove(index)">
+            <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0 3H1.5M12 3H10.5M3.5 3V2.5C3.5 1.67157 4.17157 1 5 1H7C7.82843 1 8.5 1.67157 8.5 2.5V3M3.5 3H8.5M3.5 3H1.5M8.5 3H10.5M10.5 3V13.5C10.5 14.3284 9.82843 15 9 15H3C2.17157 15 1.5 14.3284 1.5 13.5V3M4.5 6.5V10.5M7.5 6.5V10.5"
+                stroke="black" />
+            </svg>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -117,6 +230,7 @@
       return {
         columns: [],
         row: null,
+        changedRow: null,
       }
     },
     mounted() {
@@ -141,6 +255,9 @@
       remove(index) {
         this.columns.splice(index, 1)
       },
+      dragStart(event) {
+        this.changedRow = event.currentTarget
+      },
       dragEnd(event) {
         let rows = this.$refs.columns
         let newIndex = rows.indexOf(this.row)
@@ -150,7 +267,30 @@
         this.columns.splice(newIndex, 0, currentColumn[0])
       },
       dragOver(event) {
+        let rows = this.$refs.columns
+
         this.row = event.currentTarget
+
+        let newIndex = rows.indexOf(this.row)
+        let prevIndex = rows.indexOf(this.changedRow)
+
+        let targetClass = ""
+        if (newIndex == prevIndex) {
+          return
+        }
+
+        if (newIndex < prevIndex) {
+          targetClass = "drag-target-top"
+        } else {
+          targetClass = "drag-target-bottom"
+        }
+
+        this.row.classList.add(targetClass)
+      },
+      dragLeave(event) {
+        this.row = event.currentTarget
+
+        this.row.classList.remove("drag-target-bottom", "drag-target-top")
       }
     },
   }).mount("article")

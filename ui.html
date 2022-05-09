@@ -43,7 +43,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(column, index) in columns">
+      <tr ref="columns" v-for="(column, index) in columns" draggable="true" @dragend="dragEnd" @dragover="dragOver">
         <td>
           <input v-model="column.name" type="text" />
         </td>
@@ -86,7 +86,7 @@
             <option value="geometry">Geometry</option>
             <option value="geometrycollection">Geometry Collection</option>
             <option value="json">JSON</option>
-            <option value="point">point</option>
+            <option value="point">Point</option>
             <option value="multipoint">Multiple Point</option>
             <option value="polygon">Polygon</option>
             <option value="multipolygon">Multiple Polygon</option>
@@ -116,6 +116,7 @@
     data() {
       return {
         columns: [],
+        row: null,
       }
     },
     mounted() {
@@ -140,6 +141,17 @@
       remove(index) {
         this.columns.splice(index, 1)
       },
+      dragEnd(event) {
+        let rows = this.$refs.columns
+        let newIndex = rows.indexOf(this.row)
+        let prevIndex = rows.indexOf(event.currentTarget)
+
+        let currentColumn = this.columns.splice(prevIndex, 1)
+        this.columns.splice(newIndex, 0, currentColumn[0])
+      },
+      dragOver(event) {
+        this.row = event.currentTarget
+      }
     },
   }).mount("article")
 </script>

@@ -115,30 +115,24 @@ function DatabaseTableWidget() {
     <AutoLayout
       direction="vertical"
     >
-      <Frame
+      <AutoLayout
         width={400}
         height={48}
+        cornerRadius={{
+          topLeft: 16,
+          topRight: 16,
+        }}
+        fill={theme}
+        padding={{
+          horizontal: 16,
+        }}
+        horizontalAlignItems="center"
+        verticalAlignItems="center"
       >
-        <Rectangle
-          width={400}
-          height={48}
-          x={0}
-          y={0}
-          fill={theme}
-          cornerRadius={{
-            topLeft: 16,
-            topRight: 16,
-          }}
-        />
         <Input
-          width={368}
-          height={32}
-          inputFrameProps={{
-            x: 16,
-            y: 8,
-          }}
-          fontWeight={700}
+          width="fill-parent"
           inputBehavior="truncate"
+          fontWeight={700}
           fill="#ffffff"
           horizontalAlignText="center"
           verticalAlignText="center"
@@ -147,56 +141,50 @@ function DatabaseTableWidget() {
           onTextEditEnd={(event) => setTableName(event.characters)}
           placeholder="Table Name"
         />
-      </Frame>
+      </AutoLayout>
 
       {columns.map((column) => {
         let { icon, color } = getKeyDecorator(column)
 
         return (
-          <Frame
+          <AutoLayout
             width={400}
             height={48}
+            padding={{
+              right: 16,
+            }}
             key={column.name}
+            stroke="#e6e6e6"
+            fill="#ffffff"
+            verticalAlignItems="center"
+            horizontalAlignItems="center"
           >
-            <Rectangle
-              width={400}
-              height={48}
-              stroke="#e6e6e6"
-              fill="#ffffff"
-            />
-            <AutoLayout
-              width={384}
-              height={48}
-              verticalAlignItems="center"
-              horizontalAlignItems="center"
+            <Text
+              width={32}
+              height={32}
+              fontSize={18}
+              fontFamily="Font Awesome 5 Free"
+              fontWeight={900}
+              fill={color}
+              verticalAlignText="center"
+              horizontalAlignText="center"
             >
-              <Text
-                width={32}
-                height={32}
-                fontSize={18}
-                fontFamily="Font Awesome 5 Free"
-                fontWeight={900}
-                fill={color}
-                verticalAlignText="center"
-                horizontalAlignText="center"
-              >
-                {icon}
-              </Text>
-              <Text
-                width="fill-parent"
-                fontFamily="Fira Code"
-                fontSize={18}
-              >
-                {column.name}
-              </Text>
-              <Text
-                fontFamily="Fira Code"
-                fontSize={18}
-              >
-                {column.type}{column.nullable ? "?" : ""}
-              </Text>
-            </AutoLayout>
-          </Frame>
+              {icon}
+            </Text>
+            <Text
+              width="fill-parent"
+              fontFamily="Fira Code"
+              fontSize={18}
+            >
+              {column.name}
+            </Text>
+            <Text
+              fontFamily="Fira Code"
+              fontSize={18}
+            >
+              {column.type}{column.nullable ? "?" : ""}
+            </Text>
+          </AutoLayout>
         )
       })}
     </AutoLayout>

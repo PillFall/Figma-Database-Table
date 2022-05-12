@@ -25,6 +25,7 @@ interface Column {
   | "unique"
   | "index"
   | "normal"
+  | "foreign"
 }
 
 interface KeyDecorator {
@@ -41,6 +42,10 @@ function getKeyDecorator(column: Column): KeyDecorator {
     "primary": {
       icon: "key",
       color: "#ffdd57",
+    },
+    "foreign": {
+      icon: "link",
+      color: "#9747ff",
     },
     "unique": {
       icon: "snowflake",

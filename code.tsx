@@ -57,8 +57,41 @@ function getKeyDecorator(column: Column): KeyDecorator {
   }[column.keyType]
 }
 
+const colors = [
+  { option: "#1e1e1e", tooltip: "Black" },
+  { option: "#b3b3b3", tooltip: "Gray" },
+  { option: "#f24822", tooltip: "Red" },
+  { option: "#ffa629", tooltip: "Orange" },
+  { option: "#ffcd29", tooltip: "Yellow" },
+  { option: "#14ae5c", tooltip: "Green" },
+  { option: "#0d99ff", tooltip: "Blue" },
+  { option: "#9747ff", tooltip: "Violet" },
+  { option: "#ffffff", tooltip: "White" },
+]
+
+function hexToRgb (hex: string) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  if (!result) {
+    throw new Error(`Invalid hex color ${hex}`)
+  }
+
+  return {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+  }
+}
+
+function chooseTextColor (backgroundColor: string): WidgetJSX.Color {
+  const { r, g, b } = hexToRgb(backgroundColor)
+
+  return (r * 0.299 + g * 0.587 + b * 0.114 > 186 )
+    ? { r: 0, g: 0, b: 0, a: 1 }
+    : { r: 1, g: 1, b: 1, a: 1 }
+}
+
 function DatabaseTableWidget() {
-  const [theme, setTheme] = useSyncedState("theme", "#000c86")
+  const [theme, setTheme] = useSyncedState("theme", colors[0].option)
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
 
@@ -76,16 +109,7 @@ function DatabaseTableWidget() {
         propertyName: "colors",
         tooltip: "Color selector",
         selectedOption: theme,
-        options: [
-          {
-            option: "#000c86",
-            tooltip: "Blue",
-          },
-          {
-            option: "#000000",
-            tooltip: "Black",
-          }
-        ],
+        options: colors,
       },
       {
         itemType: "action",
@@ -133,7 +157,7 @@ function DatabaseTableWidget() {
           width="fill-parent"
           inputBehavior="truncate"
           fontWeight={700}
-          fill="#ffffff"
+          fill={chooseTextColor(theme)}
           horizontalAlignText="center"
           verticalAlignText="center"
           value={tableName}

@@ -64,6 +64,7 @@ function getKeyDecorator(column: Column): KeyDecorator {
 
 function DatabaseTableWidget() {
   const [theme, setTheme] = useSyncedState("theme", "#000c86")
+  const [collapsed, setCollapsed] = useSyncedState("collapsed", false)
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
 
@@ -97,6 +98,11 @@ function DatabaseTableWidget() {
         tooltip: "Edit table",
         propertyName: "edit",
       },
+      {
+        itemType: "action",
+        tooltip: collapsed ? "Expand" : "Collapse",
+        propertyName: "collapse",
+      },
     ],
     ({ propertyName, propertyValue }) => {
       switch (propertyName) {
@@ -112,6 +118,8 @@ function DatabaseTableWidget() {
             })
             figma.ui.postMessage(columns)
           })
+        case "collapse":
+          return setCollapsed((state) => !state)
       }
     }
   )
@@ -148,50 +156,75 @@ function DatabaseTableWidget() {
         />
       </AutoLayout>
 
-      {columns.map((column) => {
-        let { icon, color } = getKeyDecorator(column)
-
-        return (
+      {
+        collapsed ? (
           <AutoLayout
             width={400}
             height={48}
             padding={{
               right: 16,
             }}
-            key={column.name}
             stroke="#e6e6e6"
             fill="#ffffff"
             verticalAlignItems="center"
             horizontalAlignItems="center"
           >
             <Text
-              width={32}
-              height={32}
               fontSize={18}
               fontFamily="Font Awesome 5 Free"
               fontWeight={900}
-              fill={color}
               verticalAlignText="center"
               horizontalAlignText="center"
+              onClick={() => setCollapsed(false)}
             >
-              {icon}
-            </Text>
-            <Text
-              width="fill-parent"
-              fontFamily="Fira Code"
-              fontSize={18}
-            >
-              {column.name}
-            </Text>
-            <Text
-              fontFamily="Fira Code"
-              fontSize={18}
-            >
-              {column.type}{column.nullable ? "?" : ""}
+              {columns.length} collapsed fields. Click to reveal
             </Text>
           </AutoLayout>
-        )
-      })}
+        ) : columns.map((column) => {
+          let { icon, color } = getKeyDecorator(column)
+
+          return (
+            <AutoLayout
+              width={400}
+              height={48}
+              padding={{
+                right: 16,
+              }}
+              key={column.name}
+              stroke="#e6e6e6"
+              fill="#ffffff"
+              verticalAlignItems="center"
+              horizontalAlignItems="center"
+            >
+              <Text
+                width={32}
+                height={32}
+                fontSize={18}
+                fontFamily="Font Awesome 5 Free"
+                fontWeight={900}
+                fill={color}
+                verticalAlignText="center"
+                horizontalAlignText="center"
+              >
+                {icon}
+              </Text>
+              <Text
+                width="fill-parent"
+                fontFamily="Fira Code"
+                fontSize={18}
+              >
+                {column.name}
+              </Text>
+              <Text
+                fontFamily="Fira Code"
+                fontSize={18}
+              >
+                {column.type}{column.nullable ? "?" : ""}
+              </Text>
+            </AutoLayout>
+          )
+        })
+      }
     </AutoLayout>
   )
 }

@@ -96,7 +96,7 @@ function chooseTextColor (backgroundColor: string): WidgetJSX.Color {
 }
 
 function DatabaseTableWidget() {
-  const [theme, setTheme] = useSyncedState("theme", colors[0].option)
+  const [color, setColor] = useSyncedState("theme", colors[0].option)
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
 
@@ -113,7 +113,7 @@ function DatabaseTableWidget() {
         itemType: "color-selector",
         propertyName: "colors",
         tooltip: "Color selector",
-        selectedOption: theme,
+        selectedOption: color,
         options: colors,
       },
       {
@@ -125,8 +125,7 @@ function DatabaseTableWidget() {
     ({ propertyName, propertyValue }) => {
       switch (propertyName) {
         case "colors":
-          return setTheme(propertyValue)
-
+          return setColor(propertyValue)
         case "edit":
           return new Promise(() => {
             figma.showUI(__html__, {
@@ -151,7 +150,7 @@ function DatabaseTableWidget() {
           topLeft: 16,
           topRight: 16,
         }}
-        fill={theme}
+        fill={color}
         padding={{
           horizontal: 16,
         }}
@@ -162,7 +161,7 @@ function DatabaseTableWidget() {
           width="fill-parent"
           inputBehavior="truncate"
           fontWeight={700}
-          fill={chooseTextColor(theme)}
+          fill={chooseTextColor(color)}
           horizontalAlignText="center"
           verticalAlignText="center"
           value={tableName}

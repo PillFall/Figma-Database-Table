@@ -9,6 +9,7 @@
   "containsWidget": true,
   "widgetApi": "1.0.0",
   "ui": {
-    "edit_interface": "edit_interface.html"
+    "edit_interface": "edit_interface.html",
+    "edit_raw_interface": "edit_raw_interface.html"
   }
 }

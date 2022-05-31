@@ -1,0 +1,88 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: Inter;
+    scroll-padding-top: 80px;
+  }
+  body {
+    margin: 0;
+  }
+
+  div {
+    display: flex;
+    gap: 0.5rem;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background-color: #2C2C2C;
+    position: sticky;
+    top: 0px;
+  }
+
+  button {
+    height: 32px;
+    line-height: 30px;
+    max-width: 200px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: initial;
+    color: #ffffff;
+    font-family: Inter;
+    font-weight: 500;
+    padding: 0;
+  }
+
+
+  button[type=submit] {
+    padding: 0px 11px;
+    border: none;
+    background-color: #18A0FB;
+    color: #FFFFFF;
+  }
+
+  button[type=button] {
+    padding: 0px 11px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+<script src="https://unpkg.com/vue@3"></script>
+<article>
+  <div>
+    <button type="submit" @click.prevent="save">Save</button>
+  </div>
+  <textarea v-model="data"></textarea>
+</article>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        data: {},
+      }
+    },
+    mounted() {
+      addEventListener("message", (event) => {
+        this.data = JSON.stringify(event.data.pluginMessage, null, 2)
+      })
+    },
+    methods: {
+      save() {
+        parent.postMessage({
+          pluginMessage: JSON.stringify({
+            action: 'raw-edit',
+            data: JSON.parse(this.data),
+          }),
+        }, "*")
+      },
+    },
+  }).mount("article")
+</script>

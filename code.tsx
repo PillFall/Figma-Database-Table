@@ -101,8 +101,19 @@ function DatabaseTableWidget() {
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
 
   useEffect(() => {
-    figma.ui.onmessage = (newColumns) => {
-      setColumns(JSON.parse(newColumns))
+    figma.ui.onmessage = (message) => {
+      const { action, data } = JSON.parse(message)
+      switch (action) {
+        case 'edit':
+          setColumns(data)
+          break
+        case 'raw-edit':
+          setColumns(data.columns)
+          setColor(data.color)
+          setTableName(data.tableName)
+          break
+      }
+
       figma.closePlugin()
     }
   })
@@ -121,6 +132,11 @@ function DatabaseTableWidget() {
         tooltip: "Edit table",
         propertyName: "edit",
       },
+      {
+        itemType: "action",
+        tooltip: "Raw edit table",
+        propertyName: "raw-edit",
+      },
     ],
     ({ propertyName, propertyValue }) => {
       switch (propertyName) {
@@ -134,6 +150,19 @@ function DatabaseTableWidget() {
               title: "Edit table",
             })
             figma.ui.postMessage(columns)
+          })
+        case "raw-edit":
+          return new Promise(() => {
+            figma.showUI(__uiFiles__.edit_raw_interface, {
+              width: 700,
+              height: 500,
+              title: "Edit table (raw data)",
+            })
+            figma.ui.postMessage({
+              tableName,
+              color,
+              columns,
+            })
           })
       }
     }

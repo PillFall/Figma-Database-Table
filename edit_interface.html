@@ -250,7 +250,10 @@
       },
       save() {
         parent.postMessage({
-          pluginMessage: JSON.stringify(this.columns),
+          pluginMessage: JSON.stringify({
+            action: 'edit',
+            data: this.columns,
+          }),
         }, "*")
       },
       remove(index) {

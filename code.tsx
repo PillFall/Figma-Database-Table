@@ -128,7 +128,7 @@ function DatabaseTableWidget() {
           return setColor(propertyValue)
         case "edit":
           return new Promise(() => {
-            figma.showUI(__html__, {
+            figma.showUI(__uiFiles__.edit_interface, {
               width: 700,
               height: 500,
               title: "Edit table",

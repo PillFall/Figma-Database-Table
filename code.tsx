@@ -96,13 +96,24 @@ function chooseTextColor (backgroundColor: string): WidgetJSX.Color {
 }
 
 function DatabaseTableWidget() {
-  const [theme, setTheme] = useSyncedState("theme", colors[0].option)
+  const [color, setColor] = useSyncedState("theme", colors[0].option)
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
 
   useEffect(() => {
-    figma.ui.onmessage = (newColumns) => {
-      setColumns(JSON.parse(newColumns))
+    figma.ui.onmessage = (message) => {
+      const { action, data } = JSON.parse(message)
+      switch (action) {
+        case 'edit':
+          setColumns(data)
+          break
+        case 'rawEdit':
+          setColumns(data.columns)
+          setColor(data.color)
+          setTableName(data.tableName)
+          break
+      }
+
       figma.closePlugin()
     }
   })
@@ -113,7 +124,7 @@ function DatabaseTableWidget() {
         itemType: "color-selector",
         propertyName: "colors",
         tooltip: "Color selector",
-        selectedOption: theme,
+        selectedOption: color,
         options: colors,
       },
       {
@@ -121,20 +132,37 @@ function DatabaseTableWidget() {
         tooltip: "Edit table",
         propertyName: "edit",
       },
+      {
+        itemType: "action",
+        tooltip: "Edit raw JSON",
+        propertyName: "rawEdit",
+      },
     ],
     ({ propertyName, propertyValue }) => {
       switch (propertyName) {
         case "colors":
-          return setTheme(propertyValue)
-
+          return setColor(propertyValue)
         case "edit":
           return new Promise(() => {
-            figma.showUI(__html__, {
+            figma.showUI(__uiFiles__.edit, {
               width: 700,
               height: 500,
-              title: "Edit table",
+              title: "Table Editor",
             })
             figma.ui.postMessage(columns)
+          })
+        case "rawEdit":
+          return new Promise(() => {
+            figma.showUI(__uiFiles__.rawEdit, {
+              width: 700,
+              height: 500,
+              title: "Raw JSON Editor",
+            })
+            figma.ui.postMessage({
+              tableName,
+              color,
+              columns,
+            })
           })
       }
     }
@@ -151,7 +179,7 @@ function DatabaseTableWidget() {
           topLeft: 16,
           topRight: 16,
         }}
-        fill={theme}
+        fill={color}
         padding={{
           horizontal: 16,
         }}
@@ -162,7 +190,7 @@ function DatabaseTableWidget() {
           width="fill-parent"
           inputBehavior="truncate"
           fontWeight={700}
-          fill={chooseTextColor(theme)}
+          fill={chooseTextColor(color)}
           horizontalAlignText="center"
           verticalAlignText="center"
           value={tableName}

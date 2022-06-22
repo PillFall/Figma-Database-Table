@@ -1,0 +1,121 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: Inter;
+    scroll-padding-top: 80px;
+  }
+  body {
+    margin: 0;
+  }
+
+  div {
+    display: flex;
+    gap: 0.5rem;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background-color: #2C2C2C;
+    position: sticky;
+    top: 0px;
+  }
+
+  article {
+    display: grid;
+    height: 100vh;
+    grid-template-rows: min-content 1fr;
+  }
+
+  button {
+    height: 32px;
+    line-height: 30px;
+    max-width: 200px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: initial;
+    color: #ffffff;
+    font-family: Inter;
+    font-weight: 500;
+    padding: 0;
+  }
+
+
+  button[type=submit] {
+    padding: 0px 11px;
+    border: none;
+    background-color: #18A0FB;
+    color: #FFFFFF;
+  }
+
+  button[type=button] {
+    padding: 0px 11px;
+  }
+
+  textarea {
+    width: 100%;
+    resize: none;
+  }
+
+  span {
+    color: #ffffff;
+    position: absolute;
+    background-color: #f24822;
+    padding: 0.5rem 0.75rem;
+    border-radius: 1rem;
+    bottom: 1rem;
+    right: 1rem;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.5s ease-out;
+  }
+
+  .reveal {
+    opacity: unset;
+    transform: unset;
+  }
+</style>
+<script src="https://unpkg.com/vue@3"></script>
+<article>
+  <div>
+    <button type="submit" @click.prevent="save">Save</button>
+  </div>
+  <span :class="[error && 'reveal']">{{ error }}</span>
+  <textarea v-model="data"></textarea>
+</article>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        error: null,
+        data: null,
+      }
+    },
+    mounted() {
+      addEventListener("message", (event) => {
+        this.data = JSON.stringify(event.data.pluginMessage, null, 2)
+      })
+    },
+    methods: {
+      save() {
+        try {
+          parent.postMessage({
+            pluginMessage: JSON.stringify({
+              action: "rawEdit",
+              data: JSON.parse(this.data),
+            }),
+          }, "*")
+        } catch (exception) {
+          this.error = exception.message
+          setTimeout(() => {
+            this.error = null
+          }, 10000);
+        }
+      },
+    },
+  }).mount("article")
+</script>

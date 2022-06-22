@@ -8,5 +8,8 @@
   ],
   "containsWidget": true,
   "widgetApi": "1.0.0",
-  "ui": "ui.html"
+  "ui": {
+    "edit": "edit.html",
+    "rawEdit": "rawEdit.html"
+  }
 }

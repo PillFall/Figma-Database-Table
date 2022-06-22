@@ -105,7 +105,7 @@
         try {
           parent.postMessage({
             pluginMessage: JSON.stringify({
-              action: 'raw-edit',
+              action: "rawEdit",
               data: JSON.parse(this.data),
             }),
           }, "*")

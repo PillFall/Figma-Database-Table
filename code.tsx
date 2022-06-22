@@ -107,7 +107,7 @@ function DatabaseTableWidget() {
         case 'edit':
           setColumns(data)
           break
-        case 'raw-edit':
+        case 'rawEdit':
           setColumns(data.columns)
           setColor(data.color)
           setTableName(data.tableName)
@@ -134,8 +134,8 @@ function DatabaseTableWidget() {
       },
       {
         itemType: "action",
-        tooltip: "Raw edit table",
-        propertyName: "raw-edit",
+        tooltip: "Edit raw JSON",
+        propertyName: "rawEdit",
       },
     ],
     ({ propertyName, propertyValue }) => {
@@ -144,19 +144,19 @@ function DatabaseTableWidget() {
           return setColor(propertyValue)
         case "edit":
           return new Promise(() => {
-            figma.showUI(__uiFiles__.edit_interface, {
+            figma.showUI(__uiFiles__.edit, {
               width: 700,
               height: 500,
-              title: "Edit table",
+              title: "Table Editor",
             })
             figma.ui.postMessage(columns)
           })
-        case "raw-edit":
+        case "rawEdit":
           return new Promise(() => {
-            figma.showUI(__uiFiles__.edit_raw_interface, {
+            figma.showUI(__uiFiles__.rawEdit, {
               width: 700,
               height: 500,
-              title: "Edit table (raw data)",
+              title: "Raw JSON Editor",
             })
             figma.ui.postMessage({
               tableName,

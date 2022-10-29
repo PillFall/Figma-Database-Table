@@ -82,13 +82,13 @@ export function KeyColumn(props) {
         </Text>
         <Text
           width="fill-parent"
-          fontFamily="Roboto Code"
+          fontFamily="Roboto Mono"
           fontSize={18}
         >
           {column.name}
         </Text>
         <Text
-          fontFamily="Roboto Code"
+          fontFamily="Roboto Mono"
           fontSize={18}
         >
           {column.type}{column.nullable ? "?" : ""}

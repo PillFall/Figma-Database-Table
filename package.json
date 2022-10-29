@@ -4,14 +4,19 @@
   "description": "Database tables for FigJam",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
+    "build": "tsc -p tsconfig.json && rollup -c",
+    "tsc-watch": "tsc -p tsconfig.json --watch",
+    "rollup-watch": "rollup -c --watch"
   },
   "author": "PillFall",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@figma/plugin-typings": "*",
     "@figma/widget-typings": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "eslint": "*",
+    "rollup": "*",
     "typescript": "*"
   }
 }

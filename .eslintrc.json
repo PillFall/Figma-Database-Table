@@ -1,0 +1,33 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "semi": [
+      "error",
+      "never"
+    ],
+    "semi-spacing": "error",
+    "semi-style": "warn",
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "comma-spacing": "error",
+    "comma-style": "warn",
+    "quotes": [
+      "warn",
+      "double"
+    ]
+  }
+}

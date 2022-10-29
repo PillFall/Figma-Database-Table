@@ -104,10 +104,10 @@ function DatabaseTableWidget() {
     figma.ui.onmessage = (message) => {
       const { action, data } = JSON.parse(message)
       switch (action) {
-        case 'edit':
+        case "edit":
           setColumns(data)
           break
-        case 'rawEdit':
+        case "rawEdit":
           setColumns(data.columns)
           setColor(data.color)
           setTableName(data.tableName)

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir": "plugin-src",
+    "outDir": "out",
     "jsx": "react",
     "jsxFactory": "figma.widget.h",
     "jsxFragmentFactory": "figma.widget.Fragment",
@@ -10,6 +12,7 @@
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
-    ]
+    ],
+    "removeComments": true,
   }
 }

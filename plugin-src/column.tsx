@@ -11,10 +11,10 @@ export interface Column {
   nullable: boolean
   keyType:
   | "primary"
+  | "foreign"
   | "unique"
   | "index"
   | "normal"
-  | "foreign"
 }
 
 interface KeyDecorator {
@@ -30,15 +30,15 @@ function getKeyDecorator(column: Column): KeyDecorator {
   return {
     "primary": {
       icon: "key",
-      color: "#ffdd57",
+      color: "#FFCD29",
     },
     "foreign": {
       icon: "link",
-      color: "#9747ff",
+      color: "#9747FF",
     },
     "unique": {
       icon: "snowflake",
-      color: "#249beb",
+      color: "#0D99FF",
     },
     "index": {
       icon: "thumbtack",

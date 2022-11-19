@@ -1,9 +1,13 @@
 
-import { chooseTextColor, defaultHeaderColors } from "./color"
+import {
+  chooseTextColor,
+  defaultHeaderColors,
+} from "./color"
 import {
   KeyColumn,
   Column,
 } from "./column"
+import { defaultSizes } from "./size"
 
 const { widget } = figma
 const {
@@ -24,6 +28,7 @@ const startColor: HexCode = defaultHeaderColors[Math.floor(Math.random() * defau
 
 function DatabaseTableWidget() {
   const [color, setColor] = useSyncedState("theme", startColor)
+  const [size, setSize] = useSyncedState("size", "400")
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
 
@@ -55,6 +60,13 @@ function DatabaseTableWidget() {
         options: defaultHeaderColors,
       },
       {
+        itemType: "dropdown",
+        propertyName: "size",
+        tooltip: "Size",
+        selectedOption: size,
+        options: defaultSizes,
+      },
+      {
         itemType: "action",
         tooltip: "Edit table",
         propertyName: "edit",
@@ -69,6 +81,8 @@ function DatabaseTableWidget() {
       switch (propertyName) {
         case "color":
           return setColor(propertyValue)
+        case "size":
+          return setSize(propertyValue)
         case "edit":
           return new Promise(() => {
             figma.showUI(__uiFiles__.edit, {
@@ -100,7 +114,7 @@ function DatabaseTableWidget() {
       direction="vertical"
     >
       <AutoLayout
-        width={400}
+        width={parseInt(size)}
         height={48}
         cornerRadius={{
           topLeft: 16,

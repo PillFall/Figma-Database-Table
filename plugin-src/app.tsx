@@ -1,19 +1,15 @@
-
-import {
-  chooseTextColor,
-  defaultHeaderColors,
-} from "./color"
+import { defaultHeaderColors } from "./color"
 import {
   KeyColumn,
   Column,
 } from "./column"
+import Header from "./header"
 import { defaultSizes } from "./size"
 
 const { widget } = figma
 const {
   // Components
   AutoLayout,
-  Input,
 
   // Hooks
   useEffect,
@@ -112,34 +108,13 @@ function DatabaseTableWidget() {
   return (
     <AutoLayout
       direction="vertical"
+      width={parseInt(size)}
     >
-      <AutoLayout
-        width={parseInt(size)}
-        height={48}
-        cornerRadius={{
-          topLeft: 16,
-          topRight: 16,
-        }}
-        fill={color}
-        padding={{
-          horizontal: 16,
-        }}
-        horizontalAlignItems="center"
-        verticalAlignItems="center"
-      >
-        <Input
-          width="fill-parent"
-          inputBehavior="truncate"
-          fontWeight={700}
-          fill={chooseTextColor(color)}
-          horizontalAlignText="center"
-          verticalAlignText="center"
-          value={tableName}
-          fontSize={24}
-          onTextEditEnd={(event) => setTableName(event.characters)}
-          placeholder="Table Name"
-        />
-      </AutoLayout>
+      <Header
+        title={tableName}
+        color={color}
+        onTextEditEnd={(event: TextEditEvent) => setTableName(event.characters)}
+      />
 
       {columns.map((column) => (<KeyColumn key={column.name} column={column} />))}
     </AutoLayout>

@@ -58,7 +58,7 @@ export function KeyColumn(props) {
   return (
     (
       <AutoLayout
-        width={400}
+        width="fill-parent"
         height={48}
         padding={{
           right: 16,

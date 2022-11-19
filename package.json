@@ -2,11 +2,12 @@
   "name": "database-table",
   "version": "0.1.0",
   "description": "Database tables for FigJam",
-  "main": "code.js",
+  "main": "dist/code.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && rollup -c",
-    "tsc-watch": "tsc -p tsconfig.json --watch",
-    "rollup-watch": "rollup -c --watch"
+    "watch-tsc": "tsc -p tsconfig.json --watch",
+    "watch-js": "rollup -c --watch",
+    "watch": "concurrently npm:watch-*"
   },
   "author": "PillFall",
   "license": "GPL-3.0-or-later",
@@ -15,6 +16,7 @@
     "@figma/widget-typings": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
+    "concurrently": "*",
     "eslint": "*",
     "rollup": "*",
     "typescript": "*"

@@ -49,7 +49,7 @@ function DatabaseTableWidget() {
     [
       {
         itemType: "color-selector",
-        propertyName: "colors",
+        propertyName: "color",
         tooltip: "Color selector",
         selectedOption: color,
         options: defaultHeaderColors,
@@ -67,7 +67,7 @@ function DatabaseTableWidget() {
     ],
     ({ propertyName, propertyValue }) => {
       switch (propertyName) {
-        case "colors":
+        case "color":
           return setColor(propertyValue)
         case "edit":
           return new Promise(() => {

@@ -8,6 +8,7 @@
     "watch-tsc": "tsc -p tsconfig.json --watch",
     "watch-js": "rollup -c --watch",
     "watch-ui-edit": "parcel watch ui-src/edit --no-autoinstall --dist-dir dist",
+    "watch-ui-raw": "parcel watch ui-src/raw --no-autoinstall --dist-dir dist",
     "watch": "concurrently npm:watch-*"
   },
   "author": "PillFall",
@@ -23,7 +24,7 @@
     "@typescript-eslint/parser": "*",
     "concurrently": "*",
     "eslint": "*",
-    "eslint-plugin-vue": "^9.8.0",
+    "eslint-plugin-vue": "*",
     "parcel": "*",
     "pug": "*",
     "rollup": "*",

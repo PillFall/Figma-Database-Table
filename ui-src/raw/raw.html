@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <link href="https://unpkg.com/monaco-editor/min/vs/editor/editor.main.css" rel="stylesheet">
+  <link rel="stylesheet" href="data-url:./scss/style.scss">
+
+  <script src="https://unpkg.com/monaco-editor/min/vs/loader.js"></script>
+  <script>
+    window.require.config({ paths: { "vs": "https://unpkg.com/monaco-editor/min/vs" } })
+    window.require(["vs/editor/editor.main"], () => {
+      this.editor = window.monaco.editor.create(document.getElementById("editor"), {
+        language: "json",
+      })
+    })
+  </script>
+
+  <script type="module" src="data-url:./index.js" defer></script>
+</head>
+
+<body>
+  <nav></nav>
+  <div id="editor"></div>
+</body>
+
+</html>

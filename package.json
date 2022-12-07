@@ -7,6 +7,7 @@
     "build": "tsc -p tsconfig.json && rollup -c",
     "watch-tsc": "tsc -p tsconfig.json --watch",
     "watch-js": "rollup -c --watch",
+    "watch-ui-edit": "parcel watch ui-src/edit --no-autoinstall --dist-dir dist",
     "watch": "concurrently npm:watch-*"
   },
   "author": "PillFall",
@@ -14,11 +15,22 @@
   "devDependencies": {
     "@figma/plugin-typings": "*",
     "@figma/widget-typings": "*",
+    "@parcel/optimizer-data-url": "*",
+    "@parcel/transformer-inline-string": "*",
+    "@parcel/transformer-sass": "*",
+    "@parcel/transformer-vue": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "concurrently": "*",
     "eslint": "*",
+    "eslint-plugin-vue": "^9.8.0",
+    "parcel": "*",
+    "pug": "*",
     "rollup": "*",
+    "sass": "*",
     "typescript": "*"
+  },
+  "dependencies": {
+    "vue": "3"
   }
 }

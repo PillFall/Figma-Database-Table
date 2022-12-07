@@ -3,14 +3,21 @@
   "env": {
     "node": true
   },
-  "parser": "@typescript-eslint/parser",
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
   "plugins": [
     "@typescript-eslint"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:vue/vue3-strongly-recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:vue/vue3-essential"
   ],
   "rules": {
     "semi": [
@@ -28,6 +35,27 @@
     "quotes": [
       "warn",
       "double"
-    ]
+    ],
+    "vue/html-closing-bracket-newline": [
+      "warn",
+      {
+        "singleline": "never",
+        "multiline": "never"
+      }
+    ],
+    "vue/html-self-closing": [
+      "warn",
+      {
+        "html": {
+          "void": "always",
+          "normal": "never",
+          "component": "never"
+        },
+        "svg": "always",
+        "math": "always"
+      }
+    ],
+    "vue/require-default-prop": "off",
+    "vue/multi-word-component-names": "off"
   }
 }

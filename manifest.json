@@ -9,7 +9,7 @@
   "containsWidget": true,
   "widgetApi": "1.0.0",
   "ui": {
-    "edit": "edit.html",
+    "edit": "dist/edit.html",
     "rawEdit": "rawEdit.html"
   }
 }

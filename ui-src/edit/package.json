@@ -1,0 +1,5 @@
+{
+  "name": "visual-editor",
+  "source": "edit.html",
+  "distDir": "../../dist"
+}

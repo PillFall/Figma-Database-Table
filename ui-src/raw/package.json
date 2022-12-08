@@ -1,5 +1,4 @@
 {
   "name": "raw-json-editor",
-  "source": "raw.html",
-  "distDir": "../../dist"
+  "source": "raw.html"
 }

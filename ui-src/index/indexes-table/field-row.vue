@@ -1,13 +1,11 @@
 <template lang="pug">
 tr
   td
-    input(v-model="field.name" placeholder="Name" type="text")
-  td
-    type-selector(v-model="field.type")
+    index-name(v-model="field.name" :columns="columns")
+    //-select(v-model="field.name" multiple)
+      option(v-for="column in columns" :value="column.name") {{ column.name }}
   td
     index-selector(v-model="field.keyType")
-  td
-    input(v-model="field.nullable" type="checkbox")
   td
     button.button(type="reset" @click="$emit('remove', dataIndex)")
       svg(width="12" height="16" viewBox="0 0 12 16" xmlns="http://www.w3.org/2000/svg")
@@ -16,16 +14,17 @@ tr
 
 
 <script>
-import TypeSelector from "./type-selector"
+import IndexName from "./index-name"
 import IndexSelector from "./index-selector"
 
 export default {
   components: {
-    TypeSelector,
+    IndexName,
     IndexSelector,
   },
   props: {
     field: Object,
+    columns: Array,
   },
   emits: [
     "remove",

@@ -10,6 +10,7 @@
   "widgetApi": "1.0.0",
   "ui": {
     "edit": "dist/edit.html",
-    "rawEdit": "dist/raw.html"
+    "rawEdit": "dist/raw.html",
+    "indexEdit": "dist/index.html"
   }
 }

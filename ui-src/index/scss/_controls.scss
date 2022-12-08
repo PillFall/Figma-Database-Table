@@ -1,0 +1,29 @@
+.controls {
+  display: flex;
+  gap: 0.625rem;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c2c2c;
+  position: sticky;
+  top: 0px;
+
+  .button {
+    display: flex;
+    align-items: center;
+    border-radius: 0.375rem;
+    background-color: initial;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 0.6875rem;
+    padding: 0.4375rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+
+    &.is-primary {
+      border: none;
+      background-color: #18A0FB;
+      color: #FFFFFF;
+    }
+  }
+}

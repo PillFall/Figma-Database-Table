@@ -1,0 +1,130 @@
+table {
+  margin-top: 8px;
+  width: 100%;
+  border-collapse: collapse;
+
+
+  .button {
+    width: 2rem;
+    height: 2rem;
+    background-color: initial;
+    line-height: 2rem;
+    display: inline-grid;
+    place-items: center;
+    color: rgba(0, 0, 0, 0.8);
+    stroke: rgba(0, 0, 0, 0.8);
+    fill: none;
+    border: none;
+    border-radius: 0.125rem;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+  }
+}
+
+thead {
+  position: sticky;
+  top: 40px;
+  height: 40px;
+  background-color: #FFFFFF;
+}
+
+td {
+  text-align: center;
+}
+
+.new-index {
+  width: 2rem;
+  height: 2rem;
+  appearance: none;
+  text-align: center;
+  font-size: 1.5rem;
+
+  option {
+    font-size: initial;
+  }
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tag {
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.75rem;
+
+  .delete {
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.8);
+    stroke: rgba(0, 0, 0, 0.8);
+    fill: none;
+    background-color: initial;
+    border: none;
+    border-radius: 0.125rem;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+  }
+}
+
+input,
+select {
+  width: 100%;
+}
+
+input[type=text] {
+  background-color: #FFFFFF;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Inter;
+  border: none;
+  padding: 7px;
+  border-radius: 2px;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-style: solid;
+  border-width: 1px;
+}
+
+input[type=text]:focus,
+input[type=text]:focus-visible {
+  border-color: #18A0FB;
+  outline-color: #18A0FB;
+  outline-width: 1px;
+}
+
+input[type=checkbox] {
+  width: auto;
+}
+
+select {
+  height: 32px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+select:active,
+select:focus,
+select:focus-visible {
+  border-color: #18A0FB;
+  outline-color: #18A0FB;
+  outline-width: 1px;
+}
+
+.has-dragged-top {
+  border-top: 2px solid black;
+}
+
+.has-dragged-bottom {
+  border-bottom: 2px solid black;
+}

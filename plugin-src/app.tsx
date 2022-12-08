@@ -3,6 +3,10 @@ import {
   KeyColumn,
   Column,
 } from "./column"
+import {
+  KeyIndexes,
+  Index,
+} from "./index"
 import Header from "./header"
 import { defaultSizes } from "./size"
 
@@ -27,6 +31,7 @@ function DatabaseTableWidget() {
   const [size, setSize] = useSyncedState("size", "400")
   const [tableName, setTableName] = useSyncedState("tableName", null)
   const [columns, setColumns] = useSyncedState("columns", (): Column[] => [])
+  const [indexes, setIndexes] = useSyncedState("indexes", (): Index[] => [])
 
   useEffect(() => {
     figma.ui.onmessage = (message) => {
@@ -37,8 +42,12 @@ function DatabaseTableWidget() {
           break
         case "rawEdit":
           setColumns(data.columns)
+          setIndexes(data.indexes)
           setColor(data.color)
           setTableName(data.tableName)
+          break
+        case "indexEdit":
+          setIndexes(data)
           break
       }
 
@@ -69,6 +78,11 @@ function DatabaseTableWidget() {
       },
       {
         itemType: "action",
+        tooltip: "Edit indexes",
+        propertyName: "indexEdit",
+      },
+      {
+        itemType: "action",
         tooltip: "Edit raw JSON",
         propertyName: "rawEdit",
       },
@@ -88,6 +102,18 @@ function DatabaseTableWidget() {
             })
             figma.ui.postMessage(columns)
           })
+        case "indexEdit":
+          return new Promise(() => {
+            figma.showUI(__uiFiles__.indexEdit, {
+              width: 700,
+              height: 500,
+              title: "Index Editor",
+            })
+            figma.ui.postMessage({
+              indexes,
+              columns,
+            })
+          })
         case "rawEdit":
           return new Promise(() => {
             figma.showUI(__uiFiles__.rawEdit, {
@@ -99,6 +125,7 @@ function DatabaseTableWidget() {
               tableName,
               color,
               columns,
+              indexes,
             })
           })
       }
@@ -117,6 +144,7 @@ function DatabaseTableWidget() {
       />
 
       {columns.map((column) => (<KeyColumn key={column.name} column={column} />))}
+      {indexes.length != 0 && <KeyIndexes indexes={indexes} />}
     </AutoLayout>
   )
 }

@@ -9,6 +9,7 @@
     "watch-js": "rollup -c --watch",
     "watch-ui-edit": "parcel watch ui-src/edit --no-autoinstall --dist-dir dist",
     "watch-ui-raw": "parcel watch ui-src/raw --no-autoinstall --dist-dir dist",
+    "watch-ui-index": "parcel watch ui-src/index --no-autoinstall --dist-dir dist",
     "watch": "concurrently npm:watch-*"
   },
   "author": "PillFall",

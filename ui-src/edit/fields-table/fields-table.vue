@@ -17,7 +17,7 @@ table
       @dragend="dragEnd"
       @dragover="dragOver"
       @dragleave="dragLeave"
-      @remove="$emit('remove', $event)"
+      @remove="$emit('remove', index)"
     )
 </template>
 

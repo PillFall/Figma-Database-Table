@@ -20,10 +20,6 @@ export function Header(props) {
     <AutoLayout
       width="fill-parent"
       height={48}
-      cornerRadius={{
-        topLeft: 16,
-        topRight: 16,
-      }}
       fill={color}
       padding={{
         horizontal: 16,

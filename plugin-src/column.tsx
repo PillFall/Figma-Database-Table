@@ -31,7 +31,6 @@ export function KeyColumn(props) {
         padding={{
           right: 16,
         }}
-        stroke="#e6e6e6"
         fill="#ffffff"
         verticalAlignItems="center"
         horizontalAlignItems="center"

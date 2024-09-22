@@ -24,12 +24,11 @@ export function KeyIndex(props) {
   return (
     <AutoLayout
       width="fill-parent"
-      height={48}
+      height={44}
       padding={{
         right: 16,
       }}
       cornerRadius={8}
-      stroke="#e6e6e6"
       fill="#ffffff"
       verticalAlignItems="center"
       horizontalAlignItems="center"
@@ -67,7 +66,6 @@ export function KeyIndexes(props) {
       width="fill-parent"
       height="hug-contents"
       padding={12}
-      stroke="#e6e6e6"
       fill="#ffffff"
       verticalAlignItems="center"
       horizontalAlignItems="center"
@@ -78,6 +76,7 @@ export function KeyIndexes(props) {
         padding={12}
         fill="#e6e6e6"
         cornerRadius={8}
+        spacing={4}
         direction="vertical"
       >
         <Text

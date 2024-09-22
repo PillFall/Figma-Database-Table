@@ -135,6 +135,8 @@ function DatabaseTableWidget() {
   return (
     <AutoLayout
       direction="vertical"
+      cornerRadius={16}
+      stroke="#e6e6e6"
       width={parseInt(size)}
     >
       <Header
